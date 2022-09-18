@@ -1,0 +1,4 @@
+To Do
+
+- Create basic boiler plate [INVDEV-001]
+- Create a CRUD API for dividends [INVDEV-00]

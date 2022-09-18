@@ -4,8 +4,9 @@ from models.user import UserModel
 from models import get_db
 import pandas as pd
 from sqlalchemy.orm import Session
-from app.api.v1.schema.request.equity_dividends import EquityDividendsRequestSchema
-from app.api.v1.schema.response.equity_dividends import EquityDividendsResponseSchema
+from sqlalchemy.sql import func
+from app.api.v1.schema.request.equity_dividends import EquityDividendsRequestSchema, EquityDividendsXlsxRequestSchema
+from app.api.v1.schema.response.equity_dividends import EquityDividendsResponseSchema, EquityDividendsAllResponseSchema
 from app.api.v1.routes.auth import get_password_hash, get_current_user
 
 equity_dividends_router = APIRouter(prefix="/dividends", tags=["equity"])
@@ -51,7 +52,22 @@ async def get_dividend(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
 
-from app.api.v1.schema.request.equity_dividends import EquityDividendsXlsxRequestSchema
+
+@equity_dividends_router.get("", response_model=EquityDividendsAllResponseSchema)
+async def get_all_dividends(
+    db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
+):
+    try:
+        result = {}
+        query = db.query(EquityDividends).filter_by(user_id=user.id)
+        result["data"] = query.all()
+        result["total"] = query.count()
+        result["total_amount"] = query.with_entities(func.sum(EquityDividends.amount)).scalar()
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
 
 
 @equity_dividends_router.post("/using_xlsx")

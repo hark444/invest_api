@@ -9,6 +9,7 @@ from sqlalchemy import (
     BigInteger,
     ForeignKey,
     Float,
+    UniqueConstraint
 )
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -26,5 +27,10 @@ class EquityDividends(Base):
     credited_date = Column(DATE, default=datetime.now())
     equity = Column(String, nullable=False)
     shares = Column(Integer, nullable=False, default=0)
+    ISIN = Column(String, nullable=True)
     created_on = Column(DateTime, default=datetime.now(), nullable=False)
     last_modified_on = Column(DateTime, nullable=True)
+
+    __table_args__ = (
+        UniqueConstraint('equity', 'credited_date', 'amount', name='uix_dividends_equity_credited_date_amount'),
+    )

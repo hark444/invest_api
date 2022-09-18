@@ -8,3 +8,4 @@ class EquityDividendsResponseSchema(TimeStampResponseSchema):
     credited_date: date
     equity: str
     shares: int
+    ISIN: str

@@ -15,6 +15,10 @@ environs = "9.5.0"
 psycopg2-binary = "2.9.3"
 alembic = "1.8.1"
 sqlalchemy-utils = "==0.38.3"
+python-jose = "*"
+passlib = {extras = ["bcrypt"], version = "*"}
+pandas = "*"
+openpyxl = "*"
 
 [dev-packages]
 mock = "*"

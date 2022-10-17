@@ -5,3 +5,4 @@ To Do
 - Create API to read zerodha excel sheets [INVDEV-003]
 - Create GET all API for dividends [INVDEV-004]
 - Create start_year and end_year filter in get_all dividends api [INVDEV-005]
+- Remove unwanted files from GIT [INVDEV-006]

@@ -55,11 +55,15 @@ async def get_dividend(
 
 @equity_dividends_router.get("", response_model=EquityDividendsAllResponseSchema)
 async def get_all_dividends(
-    db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
+    db: Session = Depends(get_db), user: UserModel = Depends(get_current_user), start_year: int = 0, till_year: int = 0
 ):
     try:
         result = {}
         query = db.query(EquityDividends).filter_by(user_id=user.id)
+        if start_year:
+            query = query.filter(EquityDividends.credited_date > f'{start_year}-01-01')
+        if till_year:
+            query = query.filter(EquityDividends.credited_date < f'{till_year}-01-01')
         result["data"] = query.all()
         result["total"] = query.count()
         result["total_amount"] = query.with_entities(func.sum(EquityDividends.amount)).scalar()

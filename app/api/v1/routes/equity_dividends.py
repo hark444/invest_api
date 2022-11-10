@@ -64,7 +64,7 @@ async def get_all_dividends(
             query = query.filter(EquityDividends.credited_date > f'{start_year}-01-01')
         if till_year:
             query = query.filter(EquityDividends.credited_date < f'{till_year}-01-01')
-        result["data"] = query.all()
+        result["data"] = query.order_by(EquityDividends.amount.desc()).all()
         result["total"] = query.count()
         result["total_amount"] = query.with_entities(func.sum(EquityDividends.amount)).scalar()
         return result
@@ -84,10 +84,10 @@ async def create_dividend_using_xlsx(
         shape = excel_data.shape
         print(f"Shape of the excel: {shape}")
         successful_rows = 0
-        if file.error_file_path:
-            error_file_handler = open(file.error_file_path, "a")
-        else:
-            error_file_handler = open('/home/harshad/Documents/dividend_errors_log.txt', "a")
+        if not file.error_file_path:
+            file.error_file_path = '/home/harshad/Documents/dividend_errors_log.txt'
+
+        error_file_handler = open(file.error_file_path, "w")
         data = excel_data.values
         for row in data:
             print(f"Creating dividend record for row: {row}")
@@ -117,6 +117,7 @@ async def create_dividend_using_xlsx(
                 error_file_handler.write("\n")
                 error_file_handler.write(str(e))
                 error_file_handler.write("\n")
+                print(f"All errors stored in file error file at {file.error_file_path}")
 
         return {
             'status': 200,

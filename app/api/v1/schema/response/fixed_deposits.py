@@ -1,4 +1,5 @@
 from pydantic.schema import date
+from pydantic import BaseModel
 from app.api.v1.schema.response.base import TimeStampResponseSchema
 
 
@@ -13,3 +14,8 @@ class FixedDepositsResponseSchema(TimeStampResponseSchema):
     initial_investment: int
     user_id: int
     total_profit: float | None = None
+
+
+class AllFixedDepositsResponseSchema(BaseModel):
+    data: list[FixedDepositsResponseSchema]
+    total: int

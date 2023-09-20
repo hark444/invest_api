@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from settings import settings
-from models import Base, user, equity_dividends
+from models import Base, user, equity_dividends, fixed_deposits
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

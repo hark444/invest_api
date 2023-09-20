@@ -24,7 +24,7 @@ def upgrade() -> None:
     sa.Column('rate_of_interest', sa.String(), nullable=False),
     sa.Column('start_date', sa.DateTime(), nullable=False),
     sa.Column('end_date', sa.DateTime(), nullable=False),
-    sa.Column('maturity_amount', sa.Integer(), nullable=True),
+    sa.Column('maturity_amount', sa.Float(), nullable=True),
     sa.Column('total_time', sa.String(), nullable=True),
     sa.Column('remarks', sa.String(), nullable=True),
     sa.Column('created_on', sa.DateTime(), nullable=False),

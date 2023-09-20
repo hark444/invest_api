@@ -15,6 +15,11 @@ async def create_dividend(
     fd: FixedDepositsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):
     try:
+        # calculating total profit if maturity amount is given
+        total_profit = None
+        if fd.maturity_amount:
+            total_profit = fd.maturity_amount - fd.initial_investment
+
         deposit_obj = FixedDeposits(
             bank_name=fd.bank_name,
             rate_of_interest=fd.rate_of_interest,
@@ -24,7 +29,8 @@ async def create_dividend(
             total_time=fd.total_time,
             remarks=fd.remarks,
             initial_investment=fd.initial_investment,
-            user_id=user.id
+            user_id=user.id,
+            total_profit=total_profit
         )
 
         db.add(deposit_obj)

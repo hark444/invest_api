@@ -12,3 +12,4 @@ class FixedDepositsResponseSchema(TimeStampResponseSchema):
     remarks: str | None = None
     initial_investment: int
     user_id: int
+    total_profit: float | None = None

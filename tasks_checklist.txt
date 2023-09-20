@@ -10,7 +10,7 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Create Dividends (Equities + SGB) Model [INVDEV-017]
-- Create Create API for fixed deposits [INVDEV-018]
+- Create API for fixed deposits [INVDEV-018]
 - Create GET API for fixed deposits [INVDEV-019]
 - Create PUT API for fixed deposits [INVDEV-020]
 - Create DELETE API for fixed deposits [INVDEV-020]

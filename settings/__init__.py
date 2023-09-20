@@ -1,6 +1,6 @@
 from pydantic import BaseSettings
 
-# from .api import ApiSettings, api_settings
+from .api import APISettings, api_settings
 from .base import env
 from .database import database_settings, DatabaseSettings
 
@@ -11,8 +11,8 @@ from .database import database_settings, DatabaseSettings
 class Settings(BaseSettings):
     # LOG_LEVEL: str = env.str("LOG_LEVEL", "INFO")
     DATABASE: DatabaseSettings = database_settings
+    API: APISettings = api_settings
     # LOG_SETTINGS: dict = logging_settings.config
-    # API: ApiSettings = api_settings
     # AUTH: AuthSettings = auth_settings
 
 

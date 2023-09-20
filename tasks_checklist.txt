@@ -7,3 +7,4 @@ To Do
 - Create start_year and end_year filter in get_all dividends api [INVDEV-005]
 - Remove unwanted files from GIT [INVDEV-006]
 - Minor fixes in dividends create and get sort by most dividend amount [INVDEV-007]
+- Setup main.py to run server directly. [INVDEV-008]

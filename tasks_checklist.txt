@@ -1,10 +1,25 @@
 To Do
 
-- Create basic boiler plate [INVDEV-001]
-- Create a POST/GET API for dividends [INVDEV-002]
-- Create API to read zerodha excel sheets [INVDEV-003]
-- Create GET all API for dividends [INVDEV-004]
 - Create start_year and end_year filter in get_all dividends api [INVDEV-005]
 - Remove unwanted files from GIT [INVDEV-006]
 - Minor fixes in dividends create and get sort by most dividend amount [INVDEV-007]
+- Create designs for all models and setup separate tickets for them. [INVDEV-009]
+- Create Fixed Deposits Model and an Abstract Model [INVDEV-010]
+- Create Recurring Deposits Model [INVDEV-011]
+- Create Savings Bank Deposit Model [INVDEV-012]
+- Create Gold Investments Model [INVDEV-013]
+- Create Equities Model [INVDEV-014]
+- Create PPF + EPF Model [INVDEV-015]
+- Create NPS Model [INVDEV-016]
+- Create Dividends (Equities + SGB) Model [INVDEV-017]
+
+
+
+Completed Tasks
+
+- Create basic boilerplate [INVDEV-001]
+- Create a POST/GET API for dividends [INVDEV-002]
+- Create API to read Zerodha Excel sheets [INVDEV-003]
+- Create GET all API for dividends [INVDEV-004]
 - Setup main.py to run server directly. [INVDEV-008]
+

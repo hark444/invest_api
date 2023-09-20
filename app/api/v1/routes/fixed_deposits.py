@@ -4,14 +4,14 @@ from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session
 from app.api.v1.schema.request.fixed_deposits import FixedDepositsRequestSchema
-from app.api.v1.schema.response.fixed_deposits import FixedDepositsResponseSchema
+from app.api.v1.schema.response.fixed_deposits import FixedDepositsResponseSchema, AllFixedDepositsResponseSchema
 from app.api.v1.routes.auth import get_current_user
 
 fixed_deposit_router = APIRouter(prefix="/fixed_deposit", tags=["fd"])
 
 
 @fixed_deposit_router.post("", response_model=FixedDepositsResponseSchema)
-async def create_dividend(
+async def create_deposit(
     fd: FixedDepositsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):
     try:
@@ -43,26 +43,43 @@ async def create_dividend(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
 
-"""
-@equity_dividends_router.get("/{dividend_id}", response_model=EquityDividendsResponseSchema)
-async def get_dividend(
-    dividend_id: int, db: Session = Depends(get_db),
+
+@fixed_deposit_router.get("/{deposit_id}", response_model=FixedDepositsResponseSchema)
+async def get_deposit(
+    deposit_id: int, db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
-    dividend_obj = db.query(EquityDividends).filter_by(id=dividend_id, user_id=user.id).first()
-    if not dividend_obj:
-        raise HTTPException(status_code=404, detail="Dividend object not found for this user and dividend_id")
+    deposit_obj = db.query(FixedDeposits).filter_by(id=deposit_id, user_id=user.id).first()
+    if not deposit_obj:
+        raise HTTPException(status_code=404, detail="Fixed Deposit object not found for this user and deposit id")
     try:
-        return dividend_obj
+        return deposit_obj
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
 
 
+@fixed_deposit_router.get('', response_model=AllFixedDepositsResponseSchema)
+async def get_all_fd_by_user(
+        db: Session = Depends(get_db),
+        user: UserModel = Depends(get_current_user)
+):
+    try:
+        deposits = db.query(FixedDeposits).filter_by(user_id=user.id)
+        response = {"data": deposits.all(), "total": deposits.count()}
+
+        return AllFixedDepositsResponseSchema(**response)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
+
+
+"""
 @equity_dividends_router.get("", response_model=EquityDividendsAllResponseSchema)
 async def get_all_dividends(
-    db: Session = Depends(get_db), user: UserModel = Depends(get_current_user), start_year: int = 0, till_year: int = 0
+    db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):
     try:
         result = {}

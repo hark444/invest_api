@@ -3,7 +3,6 @@ To Do
 - Create start_year and end_year filter in get_all dividends api [INVDEV-005]
 - Remove unwanted files from GIT [INVDEV-006]
 - Minor fixes in dividends create and get sort by most dividend amount [INVDEV-007]
-- Create Fixed Deposits Model and an Abstract Model [INVDEV-010]
 - Create Recurring Deposits Model [INVDEV-011]
 - Create Savings Bank Deposit Model [INVDEV-012]
 - Create Gold Investments Model [INVDEV-013]
@@ -11,6 +10,12 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Create Dividends (Equities + SGB) Model [INVDEV-017]
+- Create Create API for fixed deposits [INVDEV-018]
+- Create GET API for fixed deposits [INVDEV-019]
+- Create PUT API for fixed deposits [INVDEV-020]
+- Create DELETE API for fixed deposits [INVDEV-020]
+- Fixed Deposits model should also contain the profit column and
+    it should be a calculated field during POST/PUT calls [INVDEV-021]
 
 
 
@@ -22,4 +27,4 @@ Completed Tasks
 - Create GET all API for dividends [INVDEV-004]
 - Setup main.py to run server directly. [INVDEV-008]
 - Create designs for all models and setup separate tickets for them. [INVDEV-009]
-
+- Create Fixed Deposits Model and an Abstract Model [INVDEV-010]

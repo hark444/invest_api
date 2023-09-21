@@ -11,7 +11,8 @@ To Do
 - Create NPS Model [INVDEV-016]
 - Create Dividends (Equities + SGB) Model [INVDEV-017]
 - Create DELETE API for fixed deposits [INVDEV-020]
-- Create GET endpoint for total_investments: total_profit for a user [INVDEV-021]
+- Create GET endpoint for total_investments: total_profit for a user [INVDEV-022]
+- Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
 
 
 

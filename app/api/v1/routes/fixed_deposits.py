@@ -67,7 +67,7 @@ async def get_all_fd_by_user(
         user: UserModel = Depends(get_current_user)
 ):
     try:
-        deposits = db.query(FixedDeposits).filter_by(user=user)
+        deposits = db.query(FixedDeposits).filter_by(user=user).order_by('end_date')
         if args.statement_type:
             fields = ["initial_investment", "total_profit"]
             deposits = deposits.options(load_only(*fields)).all()

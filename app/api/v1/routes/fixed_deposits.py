@@ -79,11 +79,11 @@ async def update_fixed_deposit(
         deposit_id: int, fd: FixedDepositsRequestSchema, db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
-    try:
-        existing_deposit_obj = db.query(FixedDeposits).filter_by(id=deposit_id, user_id=user.id).first()
-        if not existing_deposit_obj:
-            raise HTTPException(status_code=404, detail="Fixed Deposit object not found for this user and deposit id")
 
+    existing_deposit_obj = db.query(FixedDeposits).filter_by(id=deposit_id, user_id=user.id).first()
+    if not existing_deposit_obj:
+        raise HTTPException(status_code=404, detail="Fixed Deposit object not found for this user and deposit id")
+    try:
         total_profit = get_total_profit(fd)
 
         for field, value in dict(fd).items():
@@ -98,6 +98,20 @@ async def update_fixed_deposit(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
+
+
+@fixed_deposit_router.delete('/{deposit_id}', status_code=200)
+def delete_deposit(
+        deposit_id: int,
+        db: Session = Depends(get_db),
+        user: UserModel = Depends(get_current_user)
+):
+    deposit_obj = db.query(FixedDeposits).filter_by(id=deposit_id, user_id=user.id).first()
+    if not deposit_obj:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No fixed deposit found for this ID and user")
+    db.delete(deposit_obj)
+    db.commit()
+    return
 
 
 def get_total_profit(fd: FixedDepositsRequestSchema):

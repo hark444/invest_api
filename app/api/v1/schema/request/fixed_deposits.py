@@ -1,3 +1,5 @@
+import enum
+from pydantic import BaseModel
 from pydantic.schema import date
 from app.api.v1.schema.request.base import TimeStampRequestSchema
 
@@ -11,3 +13,11 @@ class FixedDepositsRequestSchema(TimeStampRequestSchema):
     total_time: str
     remarks: str | None = None
     initial_investment: int
+
+
+class StatementTypes(enum.Enum):
+    PL = "PL"
+
+
+class FixedDepositGetArgs(BaseModel):
+    statement_type: StatementTypes | None = None

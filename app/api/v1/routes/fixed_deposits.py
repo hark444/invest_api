@@ -2,9 +2,11 @@ from fastapi import Depends, APIRouter, HTTPException, status
 from models.fixed_deposits import FixedDeposits
 from models.user import UserModel
 from models import get_db
-from sqlalchemy.orm import Session
-from app.api.v1.schema.request.fixed_deposits import FixedDepositsRequestSchema
-from app.api.v1.schema.response.fixed_deposits import FixedDepositsResponseSchema, AllFixedDepositsResponseSchema
+from sqlalchemy.orm import Session, load_only
+from sqlalchemy.sql import func
+from app.api.v1.schema.request.fixed_deposits import FixedDepositsRequestSchema, FixedDepositGetArgs
+from app.api.v1.schema.response.fixed_deposits import (FixedDepositsResponseSchema, AllFixedDepositsResponseSchema,
+                                                       FixedDepositPLStatementResponseSchema)
 from app.api.v1.routes.auth import get_current_user
 
 fixed_deposit_router = APIRouter(prefix="/fixed_deposit", tags=["fd"])
@@ -58,16 +60,25 @@ async def get_deposit(
         )
 
 
-@fixed_deposit_router.get('', response_model=AllFixedDepositsResponseSchema)
+@fixed_deposit_router.get('', response_model=AllFixedDepositsResponseSchema|FixedDepositPLStatementResponseSchema)
 async def get_all_fd_by_user(
+        args: FixedDepositGetArgs = Depends(),
         db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
     try:
-        deposits = db.query(FixedDeposits).filter_by(user_id=user.id)
-        response = {"data": deposits.all(), "total": deposits.count()}
+        deposits = db.query(FixedDeposits).filter_by(user=user)
+        if args.statement_type:
+            fields = ["initial_investment", "total_profit"]
+            deposits = deposits.options(load_only(*fields)).all()
+            total_investments = sum([x.initial_investment for x in deposits])
+            total_profit = sum([x.total_profit for x in deposits])
+            response = {"data": deposits, "total_investment": total_investments, "total_profit": total_profit}
+            return FixedDepositPLStatementResponseSchema(**response)
 
+        response = {"data": deposits.all(), "total": deposits.count()}
         return AllFixedDepositsResponseSchema(**response)
+
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)

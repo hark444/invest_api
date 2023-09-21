@@ -10,7 +10,6 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Create Dividends (Equities + SGB) Model [INVDEV-017]
-- Create GET API for fixed deposits: by id, by user_id,  [INVDEV-019]
 - Create PUT API for fixed deposits [INVDEV-020]
 - Create DELETE API for fixed deposits [INVDEV-020]
 
@@ -28,3 +27,4 @@ Completed Tasks
 - Create POST API for fixed deposits [INVDEV-018]
 - Fixed Deposits model should also contain the profit column, and
     it should be a calculated field during POST/PUT calls [INVDEV-021]
+- Create GET API for fixed deposits: by id, by user_id,  [INVDEV-019]

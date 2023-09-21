@@ -1,9 +1,7 @@
-from fastapi import Depends, FastAPI, APIRouter, HTTPException, status
-from models.user import UserModel, RoleTypeEnum
+from fastapi import Depends, APIRouter, HTTPException, status
+from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session
-from datetime import datetime, timedelta
-from pydantic import BaseModel
 from app.api.v1.schema.response.user import UserResponseSchema
 from app.api.v1.schema.request.role import RoleTypeSchema
 

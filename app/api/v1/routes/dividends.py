@@ -8,10 +8,10 @@ from app.api.v1.schema.response.fixed_deposits import (FixedDepositsResponseSche
                                                        FixedDepositPLStatementResponseSchema)
 from app.api.v1.routes.auth import get_current_user
 
-fixed_deposit_router = APIRouter(prefix="/fixed_deposit", tags=["fd"])
+dividends_router = APIRouter(prefix="/dividends", tags=["dividends"])
 
 
-@fixed_deposit_router.post("", response_model=FixedDepositsResponseSchema)
+@dividends_router.post("", response_model=FixedDepositsResponseSchema)
 async def create_deposit(
     fd: FixedDepositsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):

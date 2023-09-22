@@ -9,7 +9,7 @@ To Do
 - Create Equities Model [INVDEV-014]
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
-- Create Dividends (Equities + SGB) Model [INVDEV-017]
+- Create Dividends (Equities + SGB + Previous FD Returns) Model [INVDEV-017]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
 - GET endpoint should sort results in ascending order of instrument maturity [INVDEV-024]
 

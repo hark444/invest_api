@@ -9,7 +9,10 @@ To Do
 - Create Equities Model [INVDEV-014]
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
-- Create Dividends (Equities + SGB + Previous FD Returns) Model [INVDEV-017]
+- Create Dividends POST endpoint. [INVDEV-025]
+- Create Dividends GET endpoint. [INVDEV-026]
+- Create Dividends PUT endpoint. [INVDEV-027]
+- Create Dividends DELETE endpoint. [INVDEV-028]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
 - GET endpoint should sort results in ascending order of instrument maturity [INVDEV-024]
 
@@ -31,3 +34,4 @@ Completed Tasks
 - Create PUT API for fixed deposits [INVDEV-020]
 - Create DELETE API for fixed deposits [INVDEV-020]
 - Create GET endpoint for total_investments: total_profit for a user [INVDEV-022]
+- Create Dividends (Equities + SGB + Previous FD Returns) Model [INVDEV-017]

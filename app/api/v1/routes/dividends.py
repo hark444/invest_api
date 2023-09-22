@@ -1,47 +1,37 @@
 from fastapi import Depends, APIRouter, HTTPException, status
-from models.fixed_deposits import FixedDeposits
+from models.dividends import Dividends
 from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session, load_only
-from app.api.v1.schema.request.fixed_deposits import FixedDepositsRequestSchema, FixedDepositGetArgs
-from app.api.v1.schema.response.fixed_deposits import (FixedDepositsResponseSchema, AllFixedDepositsResponseSchema,
-                                                       FixedDepositPLStatementResponseSchema)
+from app.api.v1.schema.request.dividends import DividendsRequestSchema
+from app.api.v1.schema.response.dividends import DividendsResponseSchema
 from app.api.v1.routes.auth import get_current_user
 
 dividends_router = APIRouter(prefix="/dividends", tags=["dividends"])
 
 
-@dividends_router.post("", response_model=FixedDepositsResponseSchema)
-async def create_deposit(
-    fd: FixedDepositsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
+@dividends_router.post("", response_model=DividendsResponseSchema)
+async def create_dividend(
+    dividend: DividendsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):
     try:
-        # calculating total profit if maturity amount is given
-        total_profit = get_total_profit(fd)
-
-        deposit_obj = FixedDeposits(
-            bank_name=fd.bank_name,
-            rate_of_interest=fd.rate_of_interest,
-            start_date=fd.start_date,
-            end_date=fd.end_date,
-            maturity_amount=fd.maturity_amount,
-            total_time=fd.total_time,
-            remarks=fd.remarks,
-            initial_investment=fd.initial_investment,
-            user_id=user.id,
-            total_profit=total_profit
+        dividend_obj = Dividends(
+            amount=dividend.amount,
+            organisation_name=dividend.organisation_name,
+            dividend_type=dividend.dividend_type,
+            user_id=user.id
         )
 
-        db.add(deposit_obj)
+        db.add(dividend_obj)
         db.commit()
-        db.refresh(deposit_obj)
-        return deposit_obj
+        db.refresh(dividend_obj)
+        return dividend_obj
 
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
-
+"""
 
 @fixed_deposit_router.get("/{deposit_id}", response_model=FixedDepositsResponseSchema)
 async def get_deposit(
@@ -128,3 +118,4 @@ def get_total_profit(fd: FixedDepositsRequestSchema):
     if fd.maturity_amount:
         return fd.maturity_amount - fd.initial_investment
     return
+"""

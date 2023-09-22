@@ -2,22 +2,20 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
-    DateTime,
     DATE,
     BigInteger,
     ForeignKey,
     Float,
-    UniqueConstraint
+    Enum
 )
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from models import Base
 from models.user import UserModel
 from models.base_models import TimeStampBaseModel
-from enum import Enum
+import enum
 
 
-class DividendType(Enum):
+class DividendType(str, enum.Enum):
     FD = 'FD'
     SBI = 'SBI'
     SGB = 'SGB'

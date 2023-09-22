@@ -9,7 +9,7 @@ from app.api.v1.schema.request.equity_dividends import EquityDividendsRequestSch
 from app.api.v1.schema.response.equity_dividends import EquityDividendsResponseSchema, EquityDividendsAllResponseSchema
 from app.api.v1.routes.auth import get_password_hash, get_current_user
 
-equity_dividends_router = APIRouter(prefix="/dividends", tags=["equity"])
+equity_dividends_router = APIRouter(prefix="/equity_dividends", tags=["equity"])
 
 
 @equity_dividends_router.post("", response_model=EquityDividendsResponseSchema)

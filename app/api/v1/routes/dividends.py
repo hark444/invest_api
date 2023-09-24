@@ -4,7 +4,7 @@ from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session, load_only
 from app.api.v1.schema.request.dividends import DividendsRequestSchema
-from app.api.v1.schema.response.dividends import DividendsResponseSchema
+from app.api.v1.schema.response.dividends import DividendsResponseSchema, AllDividendsResponseSchema
 from app.api.v1.routes.auth import get_current_user
 
 dividends_router = APIRouter(prefix="/dividends", tags=["dividends"])
@@ -31,49 +31,41 @@ async def create_dividend(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
-"""
 
-@fixed_deposit_router.get("/{deposit_id}", response_model=FixedDepositsResponseSchema)
+@dividends_router.get("/{dividend_id}", response_model=DividendsResponseSchema)
 async def get_deposit(
-    deposit_id: int, db: Session = Depends(get_db),
+    dividend_id: int, db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
-    deposit_obj = db.query(FixedDeposits).filter_by(id=deposit_id, user_id=user.id).first()
-    if not deposit_obj:
-        raise HTTPException(status_code=404, detail="Fixed Deposit object not found for this user and deposit id")
+    dividend_obj = db.query(Dividends).filter_by(id=dividend_id, user_id=user.id).first()
+    if not dividend_obj:
+        raise HTTPException(status_code=404, detail="Dividend object not found for this user and deposit id")
     try:
-        return deposit_obj
+        return dividend_obj
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
 
 
-@fixed_deposit_router.get('', response_model=AllFixedDepositsResponseSchema|FixedDepositPLStatementResponseSchema)
+@dividends_router.get('', response_model=AllDividendsResponseSchema)
 async def get_all_fd_by_user(
-        args: FixedDepositGetArgs = Depends(),
         db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
     try:
-        deposits = db.query(FixedDeposits).filter_by(user=user).order_by('end_date')
-        if args.statement_type:
-            fields = ["initial_investment", "total_profit"]
-            deposits = deposits.options(load_only(*fields)).all()
-            total_investments = sum([x.initial_investment for x in deposits])
-            total_profit = sum([x.total_profit for x in deposits])
-            response = {"data": deposits, "total_investment": total_investments, "total_profit": total_profit}
-            return FixedDepositPLStatementResponseSchema(**response)
-
-        response = {"data": deposits.all(), "total": deposits.count()}
-        return AllFixedDepositsResponseSchema(**response)
+        dividends = db.query(Dividends).filter_by(user=user).order_by('credited_date')
+        all_dividends = dividends.all()
+        total_amount = sum([x.amount for x in all_dividends])
+        response = {"data": all_dividends, "total": dividends.count(), 'total_amount': total_amount}
+        return AllDividendsResponseSchema(**response)
 
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
 
-
+"""
 @fixed_deposit_router.put('/{deposit_id}', response_model=FixedDepositsResponseSchema)
 async def update_fixed_deposit(
         deposit_id: int, fd: FixedDepositsRequestSchema, db: Session = Depends(get_db),

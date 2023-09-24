@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from app.api.v1.schema.response.base import TimeStampResponseSchema
 
 
@@ -6,3 +7,9 @@ class DividendsResponseSchema(TimeStampResponseSchema):
     organisation_name: str | None = None
     dividend_type: str
     user_id: int
+
+
+class AllDividendsResponseSchema(BaseModel):
+    data: list[DividendsResponseSchema]
+    total: int
+    total_amount: int

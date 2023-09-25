@@ -19,6 +19,7 @@ async def create_dividend(
             amount=dividend.amount,
             organisation_name=dividend.organisation_name,
             dividend_type=dividend.dividend_type,
+            credited_date=dividend.credited_date,
             user_id=user.id
         )
 

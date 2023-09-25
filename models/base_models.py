@@ -5,10 +5,8 @@ from sqlalchemy import (
     DateTime,
     Float
 )
-from sqlalchemy.orm import relationship
 from datetime import datetime
 from models import Base
-from models.user import UserModel
 
 
 class DepositsBaseModel(Base):

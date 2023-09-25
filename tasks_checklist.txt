@@ -11,7 +11,9 @@ To Do
 - Create NPS Model [INVDEV-016]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
 - GET endpoint should sort results in ascending order of instrument maturity [INVDEV-024]
-
+- Create a script to read all axis bank interest certificate files. Additionally, it should
+    send POST requests to create dividend objects.[INVDEV-029]
+- Create Redis connection. [INVDEV-030]
 
 
 Completed Tasks

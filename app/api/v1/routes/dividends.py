@@ -15,11 +15,15 @@ async def create_dividend(
     dividend: DividendsRequestSchema, db: Session = Depends(get_db), user: UserModel = Depends(get_current_user)
 ):
     try:
+        # check unique constraint
+        interest_id_user_id_unique_check(db, dividend.interest_id, user.id)
+
         dividend_obj = Dividends(
             amount=dividend.amount,
             organisation_name=dividend.organisation_name,
             dividend_type=dividend.dividend_type,
             credited_date=dividend.credited_date,
+            interest_id=dividend.interest_id,
             user_id=user.id
         )
 
@@ -28,6 +32,10 @@ async def create_dividend(
         db.refresh(dividend_obj)
         return dividend_obj
 
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(ve)
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
@@ -78,6 +86,8 @@ async def update_dividend(
     if not existing_dividends_obj:
         raise HTTPException(status_code=404, detail="Dividend object not found for this user and deposit id")
     try:
+        # check unique constraint
+        interest_id_user_id_unique_check(db, dividend.interest_id, user.id, existing_dividends_obj.id)
 
         for field, value in dict(dividend).items():
             setattr(existing_dividends_obj, field, value)
@@ -86,6 +96,10 @@ async def update_dividend(
         db.commit()
         db.refresh(existing_dividends_obj)
         return existing_dividends_obj
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(ve)
+        )
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
@@ -104,3 +118,11 @@ def delete_dividend(
     db.delete(dividend_obj)
     db.commit()
     return
+
+
+def interest_id_user_id_unique_check(db, interest_id, user_id, existing_dividend_id=None):
+    dividend_obj = db.query(Dividends).filter_by(interest_id=interest_id, user_id=user_id).first()
+    if dividend_obj:
+        if existing_dividend_id and existing_dividend_id == dividend_obj.id:
+            return
+        raise ValueError("This interest_id and user_id already exists.")

@@ -6,7 +6,8 @@ from sqlalchemy import (
     BigInteger,
     ForeignKey,
     Float,
-    Enum
+    Enum,
+    UniqueConstraint
 )
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -31,3 +32,8 @@ class Dividends(TimeStampBaseModel):
     credited_date = Column(DATE, default=datetime.now())
     dividend_type = Column(Enum(DividendType), server_default="FD")
     organisation_name = Column(String, nullable=False)
+    interest_id = Column(String, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint('user_id', 'interest_id', name='uix_dividends_user_id_interest_id'),
+    )

@@ -9,6 +9,7 @@ class DividendsResponseSchema(TimeStampResponseSchema):
     dividend_type: str
     user_id: int
     credited_date: date
+    interest_id: str
 
 
 class AllDividendsResponseSchema(BaseModel):

@@ -22,6 +22,7 @@ def create_dividend(request_body):
         if response.status_code == status.HTTP_200_OK:
             return True
         else:
+            logger.exception(response.text)
             logger.exception(f"Status returned by POST request is other than 200. It is: {response.status_code}")
     else:
         logger.exception("Auth token couldn't be generated.")

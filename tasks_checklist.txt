@@ -10,8 +10,6 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
-- Add column interest_id to dividends. This column should be unique for all dividends.
-    Write migrations for the same for existing dividends. [INVDEV-031]
 
 
 
@@ -40,3 +38,6 @@ Completed Tasks
 - Create a script to read all axis bank interest certificate files. Additionally, it should
     send POST requests to create dividend objects.[INVDEV-029]
 - Create Redis connection. [INVDEV-030]
+- Add column interest_id to dividends. This column should be unique for all dividends.
+    Write migrations for the same for existing dividends. [INVDEV-031]
+- Add dividendType using alembic. Also, update axis dividends read to incorporate Kotak's data as well. [INVDEV-032]

@@ -20,6 +20,7 @@ class DividendType(str, enum.Enum):
     FD = 'FD'
     SBI = 'SBI'
     SGB = 'SGB'
+    RD = 'RD'
 
 
 class Dividends(TimeStampBaseModel):

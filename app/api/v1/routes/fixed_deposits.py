@@ -75,6 +75,9 @@ async def get_all_fd_by_user(
             response = {"data": deposits, "total_investment": total_investments, "total_profit": total_profit}
             return FixedDepositPLStatementResponseSchema(**response)
 
+        if args.end_date:
+            deposits = deposits.filter_by(end_date=args.end_date)
+
         response = {"data": deposits.all(), "total": deposits.count()}
         return AllFixedDepositsResponseSchema(**response)
 

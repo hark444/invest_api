@@ -10,6 +10,7 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
+- Update FD GET endpoint to accommodate end_date as well. [INVDEV-033]
 
 
 

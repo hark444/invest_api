@@ -10,7 +10,6 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
-- Update FD GET endpoint to accommodate end_date as well. [INVDEV-033]
 
 
 
@@ -42,3 +41,5 @@ Completed Tasks
 - Add column interest_id to dividends. This column should be unique for all dividends.
     Write migrations for the same for existing dividends. [INVDEV-031]
 - Add dividendType using alembic. Also, update axis dividends read to incorporate Kotak's data as well. [INVDEV-032]
+- Update FD GET endpoint to accommodate end_date as well. [INVDEV-033]
+- Add year-wise argument in Dividend GET endpoint. [INVDEV-034]

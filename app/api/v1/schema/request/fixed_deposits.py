@@ -21,3 +21,4 @@ class StatementTypes(enum.Enum):
 
 class FixedDepositGetArgs(BaseModel):
     statement_type: StatementTypes | None = None
+    end_date: date | None = None

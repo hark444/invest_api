@@ -3,7 +3,8 @@ from models.dividends import Dividends
 from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session
-from app.api.v1.schema.request.dividends import DividendsRequestSchema
+from sqlalchemy import extract
+from app.api.v1.schema.request.dividends import DividendsRequestSchema, DividendGetArgs
 from app.api.v1.schema.response.dividends import DividendsResponseSchema, AllDividendsResponseSchema
 from app.api.v1.routes.auth import get_current_user
 
@@ -60,11 +61,14 @@ async def get_dividend(
 
 @dividends_router.get('', response_model=AllDividendsResponseSchema)
 async def get_all_dividend_by_user(
+        args: DividendGetArgs = Depends(),
         db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
 ):
     try:
         dividends = db.query(Dividends).filter_by(user=user).order_by('credited_date')
+        if args.year:
+            dividends = dividends.filter(extract('year', Dividends.credited_date) == args.year)
         all_dividends = dividends.all()
         total_amount = sum([x.amount for x in all_dividends])
         response = {"data": all_dividends, "total": dividends.count(), 'total_amount': total_amount}

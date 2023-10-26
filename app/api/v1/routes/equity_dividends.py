@@ -85,7 +85,7 @@ async def create_dividend_using_xlsx(
         print(f"Shape of the excel: {shape}")
         successful_rows = 0
         if not file.error_file_path:
-            file.error_file_path = '/home/harshad/Documents/dividend_errors_log.txt'
+            file.error_file_path = 'dividend_errors_log.txt'
 
         error_file_handler = open(file.error_file_path, "w")
         data = excel_data.values
@@ -93,7 +93,7 @@ async def create_dividend_using_xlsx(
             print(f"Creating dividend record for row: {row}")
             try:
                 dividend = EquityDividendsRequestSchema(
-                    equity=row[0], ISIN=row[1], amount=row[4], shares=row[3], credited_date=row[2]
+                    equity=row[0], ISIN=row[1], amount=row[5], shares=row[3], credited_date=row[2]
                 )
                 dividend_obj = EquityDividends(
                     amount=dividend.amount,

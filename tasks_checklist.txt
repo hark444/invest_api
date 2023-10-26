@@ -10,8 +10,7 @@ To Do
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
-
-
+- Update equity_dividends logic [INVDEV-035]
 
 Completed Tasks
 

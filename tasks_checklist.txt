@@ -1,7 +1,7 @@
 To Do
 
 - Create start_year and end_year filter in get_all dividends api [INVDEV-005]
-- Remove unwanted files from GIT [INVDEV-006]
+- Remove unwanted files from GIT... which files ??? [INVDEV-006]
 - Minor fixes in dividends create and get sort by most dividend amount [INVDEV-007]
 - Create Recurring Deposits Model [INVDEV-011]
 - Create Savings Bank Deposit Model [INVDEV-012]
@@ -9,8 +9,10 @@ To Do
 - Create Equities Model [INVDEV-014]
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
+- Create MF main model [INVDEV-036]
+- Create MF investment linked model [INVDEV-037]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
-- Update equity_dividends logic [INVDEV-035]
+
 
 Completed Tasks
 
@@ -42,3 +44,4 @@ Completed Tasks
 - Add dividendType using alembic. Also, update axis dividends read to incorporate Kotak's data as well. [INVDEV-032]
 - Update FD GET endpoint to accommodate end_date as well. [INVDEV-033]
 - Add year-wise argument in Dividend GET endpoint. [INVDEV-034]
+- Update equity_dividends logic [INVDEV-035]

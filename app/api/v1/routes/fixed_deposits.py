@@ -3,6 +3,7 @@ from models.fixed_deposits import FixedDeposits
 from models.user import UserModel
 from models import get_db
 from sqlalchemy.orm import Session, load_only
+from sqlalchemy import func
 from app.api.v1.schema.request.fixed_deposits import FixedDepositsRequestSchema, FixedDepositGetArgs
 from app.api.v1.schema.response.fixed_deposits import (FixedDepositsResponseSchema, AllFixedDepositsResponseSchema,
                                                        FixedDepositPLStatementResponseSchema)
@@ -77,6 +78,9 @@ async def get_all_fd_by_user(
 
         if args.end_date:
             deposits = deposits.filter_by(end_date=args.end_date)
+
+        if args.maturity_year:
+            deposits = deposits.filter(func.extract('year', FixedDeposits.end_date) == args.maturity_year)
 
         response = {"data": deposits.all(), "total": deposits.count()}
         return AllFixedDepositsResponseSchema(**response)

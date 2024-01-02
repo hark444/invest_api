@@ -12,6 +12,7 @@ To Do
 - Create MF main model [INVDEV-036]
 - Create MF investment linked model [INVDEV-037]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
+- Filter FD by all maturity year [INVDEV-038]
 
 
 Completed Tasks

@@ -1,3 +1,5 @@
+import datetime
+
 from fastapi import Depends, APIRouter, HTTPException, status
 from models.fixed_deposits import FixedDeposits
 from models.user import UserModel
@@ -91,7 +93,7 @@ async def get_all_fd_by_user(
         )
 
 
-@fixed_deposit_router.put('/{deposit_id}', response_model=FixedDepositsResponseSchema)
+@fixed_deposit_router.put('/{deposit_id}', response_model=FixedDepositsResponseSchema|str)
 async def update_fixed_deposit(
         deposit_id: int, fd: FixedDepositsRequestSchema, db: Session = Depends(get_db),
         user: UserModel = Depends(get_current_user)
@@ -107,10 +109,36 @@ async def update_fixed_deposit(
             setattr(existing_deposit_obj, field, value)
         existing_deposit_obj.total_profit = total_profit
 
-        db.add(existing_deposit_obj)
-        db.commit()
-        db.refresh(existing_deposit_obj)
-        return existing_deposit_obj
+        if fd.end_date <= datetime.date.today():
+            # Create a dividends object here, and delete the FD object.
+            from models.dividends import Dividends, DividendType
+            from .dividends import interest_id_user_id_unique_check
+            interest_id_user_id_unique_check(db, fd.remarks, user.id)
+
+            dividend_obj = Dividends(
+                amount=existing_deposit_obj.total_profit,
+                organisation_name=existing_deposit_obj.bank_name,
+                dividend_type=DividendType.FD.value,
+                credited_date=existing_deposit_obj.end_date,
+                interest_id=existing_deposit_obj.remarks,
+                user_id=user.id
+            )
+
+            db.add(dividend_obj)
+            db.commit()
+            db.refresh(dividend_obj)
+
+            # Deleting existing fd object
+            db.delete(existing_deposit_obj)
+            db.commit()
+            return ("Your FD has been converted in a Dividends Type as it's end_date was in the past."
+                    f"Dividends Id: {dividend_obj.id}")
+
+        else:
+            db.add(existing_deposit_obj)
+            db.commit()
+            db.refresh(existing_deposit_obj)
+            return existing_deposit_obj
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)

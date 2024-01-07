@@ -81,8 +81,11 @@ async def get_all_fd_by_user(
         if args.end_date:
             deposits = deposits.filter_by(end_date=args.end_date)
 
-        if args.maturity_year:
+        elif args.maturity_year:
             deposits = deposits.filter(func.extract('year', FixedDeposits.end_date) == args.maturity_year)
+
+        elif args.bank:
+            deposits = deposits.filter(FixedDeposits.bank_name.ilike(f"%{args.bank}%"))
 
         response = {"data": deposits.all(), "total": deposits.count()}
         return AllFixedDepositsResponseSchema(**response)

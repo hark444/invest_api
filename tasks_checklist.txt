@@ -15,6 +15,7 @@ To Do
 - Filter FD by all maturity year [INVDEV-038]
 - Create a method, wherein if an FD is set to matured state, a corresponding dividends object must be created
     and the existing FD method should be deleted. [INVDEV-039]
+- Filter FD by bank name in GET endpoint. [INVDEV-040]
 
 
 Completed Tasks

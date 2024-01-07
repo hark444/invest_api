@@ -23,3 +23,4 @@ class FixedDepositGetArgs(BaseModel):
     statement_type: StatementTypes | None = None
     end_date: date | None = None
     maturity_year: int | None = None
+    bank: str | None = None

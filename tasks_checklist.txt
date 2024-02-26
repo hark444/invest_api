@@ -9,8 +9,9 @@ To Do
 - Create Equities Model [INVDEV-014]
 - Create PPF + EPF Model [INVDEV-015]
 - Create NPS Model [INVDEV-016]
-- Create MF main model [INVDEV-036]
-- Create MF investment linked model [INVDEV-037]
+- Create MF Request Response Schema [INVDEV-041]
+- Create MF POST Request [INVDEV-042]
+- Create MF GET, PUT & DELETE Requests [INVDEV-043]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
 
 
@@ -50,3 +51,5 @@ Completed Tasks
 - Create a method, wherein if an FD is set to matured state, a corresponding dividends object must be created
     and the existing FD method should be deleted. [INVDEV-039]
 - Filter FD by bank name in GET endpoint. [INVDEV-040]
+- Create MF main model [INVDEV-036]
+- Create MF investment linked model [INVDEV-037]

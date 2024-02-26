@@ -12,10 +12,7 @@ To Do
 - Create MF main model [INVDEV-036]
 - Create MF investment linked model [INVDEV-037]
 - Problem: FD Get endpoint for total_investments : total_profit not returning proper structure [INVDEV-023]
-- Filter FD by all maturity year [INVDEV-038]
-- Create a method, wherein if an FD is set to matured state, a corresponding dividends object must be created
-    and the existing FD method should be deleted. [INVDEV-039]
-- Filter FD by bank name in GET endpoint. [INVDEV-040]
+
 
 
 Completed Tasks
@@ -49,3 +46,7 @@ Completed Tasks
 - Update FD GET endpoint to accommodate end_date as well. [INVDEV-033]
 - Add year-wise argument in Dividend GET endpoint. [INVDEV-034]
 - Update equity_dividends logic [INVDEV-035]
+- Filter FD by all maturity year [INVDEV-038]
+- Create a method, wherein if an FD is set to matured state, a corresponding dividends object must be created
+    and the existing FD method should be deleted. [INVDEV-039]
+- Filter FD by bank name in GET endpoint. [INVDEV-040]
